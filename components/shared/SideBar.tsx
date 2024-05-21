@@ -40,7 +40,7 @@ const SideBar = () => {
                     <Link href={link.route} className="sidebar-link">
                       <Image
                         src={link.icon}
-                        alt="logo"
+                        alt="icon"
                         width={24}
                         height={24}
                         className={`${isActive && "brightness-200"}`}
@@ -68,7 +68,7 @@ const SideBar = () => {
                     <Link href={link.route} className="sidebar-link">
                       <Image
                         src={link.icon}
-                        alt="logo"
+                        alt={`${link.label}`}
                         width={24}
                         height={24}
                         className={`${isActive && "brightness-200"}`}

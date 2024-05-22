@@ -48,7 +48,6 @@ describe("SideBar", () => {
       navLinks.slice(0, 6).forEach((link) => {
         const image = screen.getByText(link.label);
         expect(image).toBeInTheDocument();
-        // expect(image).toHaveAttribute("src", link.icon);
       });
     });
   });

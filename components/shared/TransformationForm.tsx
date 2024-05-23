@@ -45,11 +45,15 @@ const TransformationForm = ({
   data = null,
   type,
   creditBalance,
+  config = null,
 }: TransformationFormProps) => {
   const transformationType = transformationTypes[type];
   const [image, setImage] = useState(data);
   const [newTransformation, setNewTransformation] =
     useState<Transformations | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isTransforming, setIsTransforming] = useState(false);
+  const [isTransformationConfig, setIsTransformationConfig] = useState(config);
 
   const initialValues =
     data && action === "Update"
@@ -75,6 +79,15 @@ const TransformationForm = ({
     value: string,
     onChange: (value: string) => void
   ) => {};
+
+  const onInputChangeHandler = (
+    fieldName: string,
+    value: string,
+    type: string,
+    onChangeField: (value: string) => void
+  ) => {};
+
+  const onTransformHandler = () => {};
 
   return (
     <Form {...form}>
@@ -114,6 +127,83 @@ const TransformationForm = ({
             )}
           />
         )}
+
+        {(type === "remove" || type === "recolor") && (
+          <div className="prompt-field">
+            <CustomField
+              control={form.control}
+              name="prompt"
+              formLabel={
+                type === "remove" ? "Object to remove" : "Object to recolor"
+              }
+              className="w-full"
+              render={({ field }) => (
+                <Input
+                  value={field.color}
+                  className="input-field"
+                  onChange={(e) =>
+                    onInputChangeHandler(
+                      "prompt",
+                      e.target.value,
+                      type,
+                      field.onChange
+                    )
+                  }
+                />
+              )}
+            />
+          </div>
+        )}
+
+        {type === "recolor" && (
+          <CustomField
+            control={form.control}
+            name="color"
+            formLabel="Replacement Color"
+            className="w-full"
+            render={({ field }) => (
+              <Input
+                value={field.value}
+                className="input-field"
+                onChange={(e) =>
+                  onInputChangeHandler(
+                    "color",
+                    e.target.value,
+                    "recolor",
+                    field.onChange
+                  )
+                }
+              />
+            )}
+          />
+        )}
+
+        {/* {type === "remove" && (
+          <div className="">
+
+            <CustomField />
+          </div>
+        )
+        } */}
+
+        <div className="flex flex-col gap-4">
+          <Button
+            type="button"
+            className="submit-button capitalize"
+            disabled={isTransforming || newTransformation === null}
+            onClick={onTransformHandler}
+          >
+            {isTransforming ? "Transforming..." : "Apply Transformation"}
+          </Button>
+
+          <Button
+            type="submit"
+            className="submit-button capitalize"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Save Image"}
+          </Button>
+        </div>
       </form>
     </Form>
   );

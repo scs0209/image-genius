@@ -100,3 +100,31 @@ export const defaultValues = {
   prompt: "",
   publicId: "",
 };
+
+/**
+ * 다양한 이미지 변환 작업에 사용할 종횡비 옵션을 정의
+ * 각 옵션은 고유의 키, 종횡비, 라벨, 너비, 높이를 포함
+ * 옵션들은 사용자에게 선택할 수 있는 드롭다운 메뉴로 제공
+ *
+ * @type {Object.<string, {aspectRatio: string, label: string, width: number, height: number}>}
+ */
+export const aspectRatioOptions = {
+  "1:1": {
+    aspectRatio: "1:1",
+    label: "Square (1:1)", // 정사각형 비율
+    width: 1000,
+    height: 1000,
+  },
+  "3:4": {
+    aspectRatio: "3:4",
+    label: "Standard Portrait (3:4)", // 일반적인 세로 비율
+    width: 1000,
+    height: 1334,
+  },
+  "9:16": {
+    aspectRatio: "9:16",
+    label: "Phone Portrait (9:16)", // 휴대폰 세로 비율
+    width: 1000,
+    height: 1778,
+  },
+};

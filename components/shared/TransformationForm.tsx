@@ -29,8 +29,8 @@ import {
   transformationTypes,
 } from "@/constants";
 import { CustomField } from "./CustomField";
-import { useState } from "react";
-import { AspectRatioKey } from "@/lib/utils";
+import { useState, useTransition } from "react";
+import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 
 export const formSchema = z.object({
   title: z.string(),
@@ -53,7 +53,8 @@ const TransformationForm = ({
     useState<Transformations | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
-  const [isTransformationConfig, setIsTransformationConfig] = useState(config);
+  const [transformationConfig, setTransformationConfig] = useState(config);
+  const [isPending, startTransition] = useTransition();
 
   const initialValues =
     data && action === "Update"
@@ -77,17 +78,54 @@ const TransformationForm = ({
 
   const onSelectFieldHandler = (
     value: string,
-    onChange: (value: string) => void
-  ) => {};
+    onChangeField: (value: string) => void
+  ) => {
+    const imageSize = aspectRatioOptions[value as AspectRatioKey];
+
+    setImage((prevState: any) => ({
+      ...prevState,
+      aspectRatio: imageSize.aspectRatio,
+      width: imageSize.width,
+      height: imageSize.height,
+    }));
+
+    setNewTransformation(transformationType.config);
+    return onChangeField(value);
+  };
 
   const onInputChangeHandler = (
     fieldName: string,
     value: string,
     type: string,
     onChangeField: (value: string) => void
-  ) => {};
+  ) => {
+    debounce(() => {
+      setNewTransformation((prevState: any) => ({
+        ...prevState,
+        [type]: {
+          ...prevState?.[type],
+          [fieldName === "prompt" ? "prompt" : "to"]: value,
+        },
+      }));
 
-  const onTransformHandler = () => {};
+      return onChangeField(value);
+    }, 1000);
+  };
+
+  // TODO: Return to updateCredits
+  const onTransformHandler = () => {
+    setIsTransforming(true);
+
+    setTransformationConfig(
+      deepMergeObjects(newTransformation, transformationConfig)
+    );
+
+    setNewTransformation(null);
+
+    startTransition(async () => {
+      // await updateCredits(userId, creditFee)
+    });
+  };
 
   return (
     <Form {...form}>
@@ -177,14 +215,6 @@ const TransformationForm = ({
             )}
           />
         )}
-
-        {/* {type === "remove" && (
-          <div className="">
-
-            <CustomField />
-          </div>
-        )
-        } */}
 
         <div className="flex flex-col gap-4">
           <Button

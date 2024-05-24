@@ -128,3 +128,5 @@ export const aspectRatioOptions = {
     height: 1778,
   },
 };
+
+export const creditFee = -1;

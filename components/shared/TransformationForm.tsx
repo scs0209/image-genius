@@ -98,8 +98,8 @@ const TransformationForm = ({
         width: image?.width,
         height: image?.height,
         config: transformationConfig,
-        secureURL: image?.secureUrl,
-        transformationURL: transformationUrl,
+        secureUrl: image?.secureUrl,
+        transformationUrl,
         aspectRatio: values.aspectRatio,
         prompt: values.prompt,
         color: values.color,
@@ -116,7 +116,7 @@ const TransformationForm = ({
           if (newImage) {
             form.reset();
             setImage(data);
-            router.push(`/transformation/${newImage._id}`);
+            router.push(`/transformations/${newImage._id}`);
           }
         } catch (error) {
           console.log(error);

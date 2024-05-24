@@ -1,4 +1,4 @@
-import { debounce, deepMergeObjects } from "@/lib/utils";
+import { debounce, deepMergeObjects, getImageSize } from "@/lib/utils";
 
 // 테스트 그룹을 설명하는 describe 블록 시작
 describe("debounce 함수", () => {
@@ -87,5 +87,68 @@ describe("deepMergeObjects 함수", () => {
 
     // obj2가 undefined인 경우 테스트
     expect(deepMergeObjects(obj1, undefined)).toEqual(obj1);
+  });
+});
+
+describe("getImageSize 함수", () => {
+  it('type이 "fill"이고 aspectRatioOptions에 해당 dimension이 있으면 해당 값을 반환해야 함', () => {
+    // 가짜 데이터 설정
+    const type = "fill";
+    const image = {
+      aspectRatio: "3:4",
+    };
+    const dimension = "width";
+
+    // 함수 호출
+    const result = getImageSize(type, image, dimension);
+
+    // 기대값과 비교
+    expect(result).toBe(1000); // aspectRatioOptions['4:3'].width와 같아야 함
+  });
+
+  it('type이 "fill"이고 aspectRatioOptions에 해당 dimension이 없으면 기본값인 1000을 반환해야 함', () => {
+    // 가짜 데이터 설정
+    const type = "fill";
+    const image = {
+      aspectRatio: "16:9", // aspectRatioOptions에 없는 값
+      width: 1920,
+      height: 1080,
+    };
+    const dimension = "height";
+
+    // 함수 호출
+    const result = getImageSize(type, image, dimension);
+
+    // 기대값과 비교
+    expect(result).toBe(1000); // 기본값인 1000과 같아야 함
+  });
+
+  it('type이 "fill"이 아니면 이미지의 해당 dimension 값을 반환해야 함', () => {
+    // 가짜 데이터 설정
+    const type = "cover"; // "fill"이 아닌 임의의 값
+    const image = {
+      width: 800,
+      height: 600,
+    };
+    const dimension = "width";
+
+    // 함수 호출
+    const result = getImageSize(type, image, dimension);
+
+    // 기대값과 비교
+    expect(result).toBe(800); // image.width와 같아야 함
+  });
+
+  it("이미지가 존재하지 않으면 기본값인 1000을 반환해야 함", () => {
+    // 가짜 데이터 설정
+    const type = "fill";
+    const image = null; // 이미지가 없는 경우
+    const dimension = "height";
+
+    // 함수 호출
+    const result = getImageSize(type, image, dimension);
+
+    // 기대값과 비교
+    expect(result).toBe(1000); // 기본값인 1000과 같아야 함
   });
 });

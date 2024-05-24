@@ -47,7 +47,7 @@ export const dataUrl = `data:image/svg+xml;base64,${toBase64(
   shimmer(1000, 1000)
 )}`;
 
-// GE IMAGE SIZE
+// GET IMAGE SIZE
 export type AspectRatioKey = keyof typeof aspectRatioOptions;
 export const getImageSize = (
   type: string,
@@ -56,7 +56,7 @@ export const getImageSize = (
 ): number => {
   if (type === "fill") {
     return (
-      aspectRatioOptions[image.aspectRatio as AspectRatioKey]?.[dimension] ||
+      aspectRatioOptions[image?.aspectRatio as AspectRatioKey]?.[dimension] ||
       1000
     );
   }

@@ -111,3 +111,20 @@ declare type TransformedImageProps = {
   hasDownload?: boolean;
   setIsTransforming?: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+// ====== TRANSACTION PARAMS
+declare type CheckoutTransactionParams = {
+  plan: string;
+  credits: number;
+  amount: number;
+  buyerId: string;
+};
+
+declare type CreateTransactionParams = {
+  stripeId: string;
+  amount: number;
+  credits: number;
+  plan: string;
+  buyerId: string;
+  createdAt: Date;
+};

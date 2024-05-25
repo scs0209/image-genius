@@ -176,7 +176,6 @@ const TransformationForm = ({
     }, 1000);
   };
 
-  // TODO: Update creditFee to something else
   const onTransformHandler = () => {
     setIsTransforming(true);
 

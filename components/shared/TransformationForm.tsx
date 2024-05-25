@@ -171,9 +171,9 @@ const TransformationForm = ({
           [fieldName === "prompt" ? "prompt" : "to"]: value,
         },
       }));
+    }, 1000)();
 
-      return onChangeField(value);
-    }, 1000);
+    return onChangeField(value);
   };
 
   const onTransformHandler = () => {
@@ -260,30 +260,30 @@ const TransformationForm = ({
                 />
               )}
             />
-          </div>
-        )}
 
-        {type === "recolor" && (
-          <CustomField
-            control={form.control}
-            name="color"
-            formLabel="Replacement Color"
-            className="w-full"
-            render={({ field }) => (
-              <Input
-                value={field.value}
-                className="input-field"
-                onChange={(e) =>
-                  onInputChangeHandler(
-                    "color",
-                    e.target.value,
-                    "recolor",
-                    field.onChange
-                  )
-                }
+            {type === "recolor" && (
+              <CustomField
+                control={form.control}
+                name="color"
+                formLabel="Replacement Color"
+                className="w-full"
+                render={({ field }) => (
+                  <Input
+                    value={field.value}
+                    className="input-field"
+                    onChange={(e) =>
+                      onInputChangeHandler(
+                        "color",
+                        e.target.value,
+                        "recolor",
+                        field.onChange
+                      )
+                    }
+                  />
+                )}
               />
             )}
-          />
+          </div>
         )}
 
         <div className="media-uploader-field">

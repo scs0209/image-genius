@@ -7,7 +7,7 @@ import TransformImage from "@/components/shared/TransformImage";
 import { Button } from "@/components/ui/button";
 import { getImageById } from "@/lib/actions/image.actions";
 import { getImageSize } from "@/lib/utils";
-// import { DeleteConfirmation } from "@/components/shared/DeleteConfirmation";
+import DeleteConfirmation from "@/components/shared/DeleteConfirmation";
 
 const TransformationPage = async ({ params: { id } }: SearchParamProps) => {
   const { userId } = auth();
@@ -91,7 +91,7 @@ const TransformationPage = async ({ params: { id } }: SearchParamProps) => {
               </Link>
             </Button>
 
-            {/* <DeleteConfirmation imageId={image._id} /> */}
+            <DeleteConfirmation imageId={image._id} />
           </div>
         )}
       </section>

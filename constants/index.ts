@@ -208,3 +208,10 @@ export const aspectRatioOptions = {
 };
 
 export const creditFee = -1;
+
+export const langOption = [
+  { id: "en", flag: "🇺🇸", language: "English" },
+  { id: "ko", flag: "🇰🇷", language: "한국어" },
+  { id: "ja", flag: "🇯🇵", language: "日本語" },
+  { id: "zh-CN", flag: "🇨🇳", language: "简体中文" },
+];

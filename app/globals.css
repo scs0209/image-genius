@@ -66,6 +66,19 @@
   }
 }
 
+body {
+  position: static;
+  top: 0px !important;
+}
+
+iframe.skiptranslate {
+  display: none !important;
+}
+
+.skiptranslate {
+  display: none !important;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -359,6 +372,11 @@
 
   .transformed-placeholder {
     @apply flex-center p-14-medium h-full min-h-72 flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20 shadow-inner;
+  }
+
+  /* Language Modal */
+  .lang-label {
+    @apply flex w-full cursor-pointer items-center justify-between rounded-md border border-gray-200 bg-white p-4 hover:bg-gray-100 hover:text-gray-900 peer-data-[state=checked]:border-gray-900 [&:has([data-state=checked])]:border-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:peer-data-[state=checked]:border-gray-50 dark:[&:has([data-state=checked])]:border-gray-50;
   }
 }
 

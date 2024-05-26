@@ -2,6 +2,7 @@ import React from "react";
 import { Collection } from "@/components/shared/Collection";
 import Hero from "@/components/shared/Hero";
 import { getAllImages } from "@/lib/actions/image.actions";
+import GoogleTranslate from "@/components/shared/GoogleTranslate";
 
 const HomePage = async ({ searchParams }: SearchParamProps) => {
   const page = Number(searchParams?.page) || 1;
@@ -21,6 +22,8 @@ const HomePage = async ({ searchParams }: SearchParamProps) => {
           page={page}
         />
       </section>
+
+      <GoogleTranslate />
     </>
   );
 };

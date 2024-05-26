@@ -374,3 +374,34 @@
   font-weight: 600;
   color: #384262;
 }
+
+/* ==== Loader */
+@keyframes l24 {
+  100% {
+    background-position: left;
+  }
+}
+
+.loader {
+  background: radial-gradient(circle closest-side, #000 94%, transparent)
+    right/calc(200% - 1em) 100%;
+  animation: l24 1s infinite alternate linear;
+}
+
+.loader::before {
+  content: "Loading...";
+  background: radial-gradient(circle closest-side, #fff 94%, #000);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+}

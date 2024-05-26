@@ -3,6 +3,7 @@ import { IBM_Plex_Sans } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import FramerProvider from "@/components/shared/FramerProvider";
 
 const IBMPlex = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -24,7 +25,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={cn("font-IBMPlex antialiased", IBMPlex.variable)}>
-          {children}
+          <FramerProvider>{children}</FramerProvider>
         </body>
       </html>
     </ClerkProvider>

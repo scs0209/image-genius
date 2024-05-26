@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
 
+import { motion } from "framer-motion";
 import {
   Pagination,
   PaginationContent,
@@ -18,6 +19,8 @@ import { formUrlQuery } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 import { Search } from "./Search";
+import React from "react";
+import { fadeIn } from "@/lib/variant";
 
 export const Collection = ({
   hasSearch = false,
@@ -48,22 +51,35 @@ export const Collection = ({
 
   return (
     <>
-      <div className="collection-heading">
+      <motion.div
+        variants={fadeIn("up", 0.4)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+        className="collection-heading"
+      >
         <h2 className="h2-bold text-dark-600">Recent Edits</h2>
         {hasSearch && <Search />}
-      </div>
+      </motion.div>
 
-      {images.length > 0 ? (
-        <ul className="collection-list">
-          {images.map((image) => (
-            <Card image={image} key={image._id} />
-          ))}
-        </ul>
-      ) : (
-        <div className="collection-empty">
-          <p className="p-20-semibold">Empty List</p>
-        </div>
-      )}
+      <motion.div
+        variants={fadeIn("up", 0.8)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+      >
+        {images.length > 0 ? (
+          <ul className="collection-list">
+            {images.map((image) => (
+              <Card image={image} key={image._id} />
+            ))}
+          </ul>
+        ) : (
+          <div className="collection-empty">
+            <p className="p-20-semibold">Empty List</p>
+          </div>
+        )}
+      </motion.div>
 
       {totalPages > 1 && (
         <Pagination className="mt-10">

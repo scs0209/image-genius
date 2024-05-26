@@ -171,3 +171,23 @@ export function removeKeysFromQuery({
 
   return `${window.location.pathname}?${qs.stringify(currentUrl)}`;
 }
+
+// Translate language
+const languages = [
+  { label: "Korea", value: "ko", src: "https://flagcdn.com/h60/kr.png" },
+  { label: "English", value: "en", src: "https://flagcdn.com/h60/us.png" },
+  { label: "Japan", value: "ja", src: "https://flagcdn.com/h60/jp.png" },
+  { label: "Chinese", value: "zh-CN", src: "https://flagcdn.com/h60/cn.png" },
+];
+
+const includedLanguages = languages.map((lang) => lang.value).join(",");
+
+export function googleTranslateElementInit() {
+  new window.google.translate.TranslateElement(
+    {
+      pageLanguage: "auto",
+      includedLanguages,
+    },
+    "google_translate_element"
+  );
+}

@@ -7,11 +7,7 @@ import { useCookies } from "react-cookie";
 import LanguageModal from "./LanguageModal";
 import { usePathname } from "next/navigation";
 
-interface Props {
-  languageModal?: boolean;
-}
-
-export default function GoogleTranslate({ languageModal }: Props) {
+export default function GoogleTranslate() {
   const pathname = usePathname();
   const [_, setCookie, removeCookie] = useCookies();
 

@@ -23,7 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html
+        id="google_translate_element"
+        lang="en"
+        suppressHydrationWarning={true}
+      >
         <body className={cn("font-IBMPlex antialiased", IBMPlex.variable)}>
           <FramerProvider>{children}</FramerProvider>
         </body>

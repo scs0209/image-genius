@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom";
+import "jest-location-mock";
 import "whatwg-fetch";
 
 jest.mock("@clerk/nextjs", () => ({

@@ -1,15 +1,8 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { navLinks } from "@/constants";
 import SideBar from "@/components/shared/SideBar";
-
-const mockUsePathname = jest.fn();
-
-jest.mock("next/navigation", () => ({
-  ...jest.requireActual("next/navigation"),
-  usePathname() {
-    return mockUsePathname();
-  },
-}));
+import { mockRouter } from "./next-router.utils";
+import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 describe("SideBar", () => {
   it("renders the sidebar logo", () => {
@@ -19,11 +12,27 @@ describe("SideBar", () => {
   });
 
   it("renders the navigation links for signed-in users", () => {
-    render(<SideBar />);
+    render(<SideBar />, { wrapper: MemoryRouterProvider });
     navLinks.slice(0, 6).map((link) => {
       const linkElement = screen.getByRole("link", {
         name: `icon ${link.label}`,
       });
+      // expect(linkElement).toBeInTheDocument();
+      // expect(linkElement).toHaveAttribute("href", link.route);
+
+      fireEvent.click(linkElement);
+
+      expect(mockRouter.pathname).toEqual(link.route);
+    });
+  });
+
+  it("renders additional navigation links for signed-in users", () => {
+    render(<SideBar />);
+    navLinks.slice(6).forEach((link) => {
+      const linkElement = screen.getByRole("link", {
+        name: new RegExp(link.label, "i"),
+      });
+
       expect(linkElement).toBeInTheDocument();
       expect(linkElement).toHaveAttribute("href", link.route);
     });

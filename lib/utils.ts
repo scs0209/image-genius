@@ -25,6 +25,12 @@ export const handleError = (error: unknown) => {
 };
 
 // PLACEHOLDER LOADER - while image is transforming
+/**
+ * shimmer 함수: SVG 이미지를 생성하는 함수.
+ * @params w: 이미지의 너비를 지정.
+ * @params h: 이미지의 높이를 지정.
+ * @return: "shimmer" 효과가 적용된 SVG 이미지 문자열을 반환.
+ */
 const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
@@ -39,11 +45,22 @@ const shimmer = (w: number, h: number) => `
   <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
 </svg>`;
 
+/**
+ * 이 함수는 서버 환경과 클라이언트 환경(브라우저)에서 모두 사용 가능합니다.
+ *
+ * toBase64 함수: 주어진 문자열을 base64로 인코딩
+ * @params str: 인코딩할 문자열
+ * @return: base64로 인코딩된 문자열을 반환
+ */
 const toBase64 = (str: string) =>
   typeof window === "undefined"
     ? Buffer.from(str).toString("base64")
     : window.btoa(str);
 
+/**
+ * dataUrl 상수: 'shimmer' 함수로 생성된 SVG 이미지를 base64 인코딩하여 데이터 URL로 만듬
+ * 이 데이터 URL은 웹 페이지 내에서 이미지 소스로 직접 사용
+ */
 export const dataUrl = `data:image/svg+xml;base64,${toBase64(
   shimmer(1000, 1000)
 )}`;

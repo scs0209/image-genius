@@ -1,4 +1,9 @@
-import { debounce, deepMergeObjects, getImageSize } from "@/lib/utils";
+import {
+  debounce,
+  deepMergeObjects,
+  getImageSize,
+  handleError,
+} from "@/lib/utils";
 
 // 테스트 그룹을 설명하는 describe 블록 시작
 describe("debounce 함수", () => {
@@ -150,5 +155,50 @@ describe("getImageSize 함수", () => {
 
     // 기대값과 비교
     expect(result).toBe(1000); // 기본값인 1000과 같아야 함
+  });
+});
+
+describe("handleError 함수 테스트", () => {
+  it("JavaScript 에러 객체를 처리한다", () => {
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    expect(() => {
+      handleError(new Error("Test error"));
+    }).toThrow("Error: Test error");
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Test error");
+
+    consoleErrorSpy.mockRestore();
+  });
+
+  it("에러 메시지 문자열을 처리한다", () => {
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    expect(() => {
+      handleError("Test error message");
+    }).toThrow("Error: Test error message");
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Test error message");
+
+    consoleErrorSpy.mockRestore();
+  });
+
+  it("알 수 없는 타입의 에러를 처리한다", () => {
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    const unknownError = { code: 500, message: "Internal Server Error" };
+    expect(() => {
+      handleError(unknownError);
+    }).toThrow(`Unknown error: ${JSON.stringify(unknownError)}`);
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(unknownError);
+
+    consoleErrorSpy.mockRestore();
   });
 });
